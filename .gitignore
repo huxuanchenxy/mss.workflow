@@ -6,3 +6,4 @@ bin
 # user files
 .user
 .suo
+/Slickflow.Designer/Properties/PublishProfiles/*.user
