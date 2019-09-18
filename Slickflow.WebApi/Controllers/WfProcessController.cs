@@ -20,23 +20,24 @@ License along with this library; if not, you can access the official
 web page about lgpl: https://www.gnu.org/licenses/lgpl.html
 */
 
+using Microsoft.AspNetCore.Mvc;
+using Slickflow.Engine.Business.Data;
+using Slickflow.Engine.Business.Entity;
+using Slickflow.Engine.Common;
+using Slickflow.Engine.Core.Result;
+using Slickflow.Engine.Service;
+using Slickflow.Module.Resource.Entity;
+using Slickflow.Module.Resource.Service;
+using SlickOne.WebUtility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Data;
-using Microsoft.AspNetCore.Mvc;
-using SlickOne.WebUtility;
-using Slickflow.Engine.Common;
-using Slickflow.Engine.Core.Result;
-using Slickflow.Engine.Business.Data;
-using Slickflow.Engine.Business.Entity;
-using Slickflow.Engine.Service;
 
 namespace Slickflow.WebApi.Controllers
 {
-    //[Route("api/v1/[controller]")]
-    //[ApiController]
-    public class WfProcessController : Controller
+    [Route("api/v1/[controller]")]
+    [ApiController]
+    public class WfProcessController : ControllerBase
     {
         #region Workflow Api访问操作
         /// <summary>
@@ -44,7 +45,7 @@ namespace Slickflow.WebApi.Controllers
         /// </summary>
         /// <param name="runner">运行者</param>
         /// <returns>执行结果</returns>
-        [HttpPost]//pass
+        [HttpPost("StartProcess")]//pass
         public ResponseResult StartProcess([FromBody] WfAppRunner runner)
         {
             using (var session = DbFactory.CreateSession())
@@ -72,7 +73,7 @@ namespace Slickflow.WebApi.Controllers
         /// </summary>
         /// <param name="runner">运行者</param>
         /// <returns>执行结果</returns>
-        [HttpPost]//pass
+        [HttpPost("RunProcessApp")]//pass
         public ResponseResult RunProcessApp([FromBody] WfAppRunner runner)
         {
             using (var session = DbFactory.CreateSession())
@@ -99,7 +100,7 @@ namespace Slickflow.WebApi.Controllers
         /// </summary>
         /// <param name="runner">运行者</param>
         /// <returns>执行结果</returns>
-        [HttpPost]//pass
+        [HttpPost("WithdrawProcess")]//pass
         public ResponseResult WithdrawProcess([FromBody] WfAppRunner runner)
         {
             using (var session = DbFactory.CreateSession())
@@ -126,7 +127,7 @@ namespace Slickflow.WebApi.Controllers
         /// </summary>
         /// <param name="runner">运行者</param>
         /// <returns>执行结果</returns>
-        [HttpPost]//pass(不能退回到开始节点)
+        [HttpPost("SendBackProcess")]//pass(不能退回到开始节点)
         public ResponseResult SendBackProcess([FromBody] WfAppRunner runner)
         {
             using (var session = DbFactory.CreateSession())
@@ -153,7 +154,7 @@ namespace Slickflow.WebApi.Controllers
         /// </summary>
         /// <param name="runner">运行者</param>
         /// <returns>执行结果</returns>
-        [HttpPost]
+        [HttpPost("ReverseProcess")]
         public ResponseResult ReverseProcess([FromBody] WfAppRunner runner)
         {
             using (var session = DbFactory.CreateSession())
@@ -181,7 +182,7 @@ namespace Slickflow.WebApi.Controllers
         /// 获取流程记录列表
         /// </summary>
         /// <returns>流程列表</returns>
-        [HttpGet]
+        [HttpGet("GetProcessListSimple")]
         public ResponseResult<List<ProcessEntity>> GetProcessListSimple()
         {
             var result = ResponseResult<List<ProcessEntity>>.Default();
@@ -204,7 +205,7 @@ namespace Slickflow.WebApi.Controllers
 
 
 
-        [HttpPost]//pass
+        [HttpPost("CancelProcess")]//pass
         public ResponseResult CancelProcess([FromBody] WfAppRunner runner)
         {
             using (var session = DbFactory.CreateSession())
@@ -228,7 +229,7 @@ namespace Slickflow.WebApi.Controllers
         /// </summary>
         /// <param name="runner">当前执行人</param>
         /// <returns>流程下一步信息</returns>
-        [HttpPost]//pass
+        [HttpPost("GetNextStepRoleUserTree")]//pass
         public ResponseResult<List<NodeView>> GetNextStepRoleUserTree([FromBody] WfAppRunner runner)
         {
             var result = ResponseResult<List<NodeView>>.Default();
@@ -247,32 +248,51 @@ namespace Slickflow.WebApi.Controllers
             }
             return result;
         }
-        [HttpPost]//pass
-        public ResponseResult<List<TaskViewEntity>> QueryReadyTasks([FromBody] TaskQuery query)
+        //[HttpPost]//pass
+        //public ResponseResult<List<TaskViewEntity>> QueryReadyTasks([FromBody] TaskQuery query)
+        //{
+        //    var result = ResponseResult<List<TaskViewEntity>>.Default();
+        //    try
+        //    {
+        //        var taskList = new List<TaskViewEntity>();
+        //        var wfService = new WorkflowService();
+        //        var itemList = wfService.GetReadyTasks(query);
+
+        //        if (itemList != null)
+        //        {
+        //            taskList = itemList.ToList();
+        //        }
+        //        result = ResponseResult<List<TaskViewEntity>>.Success(taskList);
+        //    }
+        //    catch (System.Exception ex)
+        //    {
+        //        result = ResponseResult<List<TaskViewEntity>>.Error(string.Format(
+        //            "获取当前用户待办任务数据失败, 异常信息:{0}",
+        //            ex.Message));
+        //    }
+        //    return result;
+        //}
+
+        [HttpPost("QueryReadyTasks")]//pass
+        public ResponseResult<WorkTaskPageView> QueryReadyTasks([FromBody] WorkTaskQueryParm query)
         {
-            var result = ResponseResult<List<TaskViewEntity>>.Default();
+            var result = ResponseResult<WorkTaskPageView>.Default();
             try
             {
-                var taskList = new List<TaskViewEntity>();
-                var wfService = new WorkflowService();
-                var itemList = wfService.GetReadyTasks(query);
-
-                if (itemList != null)
-                {
-                    taskList = itemList.ToList();
-                }
-                result = ResponseResult<List<TaskViewEntity>>.Success(taskList);
+                var _service = new ResourceService();
+                var itemList = _service.GetReadyTasks(query);
+                result = ResponseResult<WorkTaskPageView>.Success(itemList);
             }
             catch (System.Exception ex)
             {
-                result = ResponseResult<List<TaskViewEntity>>.Error(string.Format(
+                result = ResponseResult<WorkTaskPageView>.Error(string.Format(
                     "获取当前用户待办任务数据失败, 异常信息:{0}",
                     ex.Message));
             }
             return result;
         }
 
-        [HttpPost]//pass查询当前到哪里个节点(不包括结束)
+        [HttpPost("QueryReadyActivityInstance")]//pass查询当前到哪里个节点(不包括结束)
         public ResponseResult<List<ActivityInstanceEntity>> QueryReadyActivityInstance([FromBody] TaskQuery query)
         {
             var result = ResponseResult<List<ActivityInstanceEntity>>.Default();
@@ -293,7 +313,7 @@ namespace Slickflow.WebApi.Controllers
             return result;
         }
 
-        [HttpPost]//pass
+        [HttpPost("QueryCompletedTasks")]//pass
         public ResponseResult<List<TaskViewEntity>> QueryCompletedTasks([FromBody] TaskQuery query)
         {
             var result = ResponseResult<List<TaskViewEntity>>.Default();

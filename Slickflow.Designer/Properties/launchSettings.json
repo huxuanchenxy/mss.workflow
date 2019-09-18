@@ -7,7 +7,7 @@
       "sslPort": 0
     },
     "iisExpress": {
-      "applicationUrl": "http://localhost/sfd/",
+      "applicationUrl": "http://10.89.36.160:8881",
       "sslPort": 0
     }
   },

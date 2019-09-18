@@ -17,6 +17,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlickOne.WebUtility", "Slic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slickflow.WebApi", "Slickflow.WebApi\Slickflow.WebApi.csproj", "{46B169E9-64A5-4918-BA98-316A2F6B751C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSS.Platform.Workflow.WebApi", "MSS.Platform.Workflow.WebApi\MSS.Platform.Workflow.WebApi.csproj", "{945C8D5D-A685-46AA-B102-13047FB18EDE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSS.API.Common", "..\MSS\commons\MSS.API.Common\MSS.API.Common.csproj", "{686FB4FC-90C2-481A-A4D9-D63672E8ED9F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,14 @@ Global
 		{46B169E9-64A5-4918-BA98-316A2F6B751C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46B169E9-64A5-4918-BA98-316A2F6B751C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46B169E9-64A5-4918-BA98-316A2F6B751C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{945C8D5D-A685-46AA-B102-13047FB18EDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{945C8D5D-A685-46AA-B102-13047FB18EDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{945C8D5D-A685-46AA-B102-13047FB18EDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{945C8D5D-A685-46AA-B102-13047FB18EDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{686FB4FC-90C2-481A-A4D9-D63672E8ED9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{686FB4FC-90C2-481A-A4D9-D63672E8ED9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{686FB4FC-90C2-481A-A4D9-D63672E8ED9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{686FB4FC-90C2-481A-A4D9-D63672E8ED9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

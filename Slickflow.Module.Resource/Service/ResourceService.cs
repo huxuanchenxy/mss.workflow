@@ -99,5 +99,19 @@ namespace Slickflow.Module.Resource.Service
             var newRoleList = rum.GetRoleListByRoleUserView(ruvList);
             return newRoleList;
         }
+
+        public WorkTaskPageView GetReadyTasks(WorkTaskQueryParm parm)
+        {
+            parm.ActivityState = 1;
+            var rum = new TaskManager();
+            return rum.GetPageByParm(parm);
+        }
+
+        public WorkTaskPageView GetCompletedTasks(WorkTaskQueryParm parm)
+        {
+            parm.ActivityState = 4;
+            var rum = new TaskManager();
+            return rum.GetPageByParm(parm);
+        }
     }
 }
