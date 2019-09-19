@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using MSS.Common.Consul;
 using Newtonsoft.Json.Serialization;
 using System.Linq;
 
@@ -50,11 +52,11 @@ namespace Slickflow.WebApi
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
 
-            
+            services.AddConsulService(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime lifetime, IOptions<ConsulServiceEntity> consulService)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -73,6 +75,7 @@ namespace Slickflow.WebApi
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
+            app.RegisterConsul(lifetime, consulService);
         }
     }
 }

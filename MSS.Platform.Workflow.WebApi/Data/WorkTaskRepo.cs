@@ -79,6 +79,10 @@ namespace MSS.Platform.Workflow.WebApi.Data
                 {
                     whereSql.Append(" and t.AssignedToUserID =" + parm.AssignedToUserID);
                 }
+                if (parm.AppName != null)
+                {
+                    whereSql.Append(" and t.AppName like '%"+ parm.AppName.Trim() + "%'");
+                }
 
                 sql.Append(whereSql);
                 

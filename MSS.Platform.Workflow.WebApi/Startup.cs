@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MSS.Platform.Workflow.WebApi.Data;
 using MSS.Platform.Workflow.WebApi.Service;
+using MSS.API.Common;
+using MSS.Platform.Workflow.WebApi.Infrastructure;
 
 namespace MSS.Platform.Workflow.WebApi
 {
@@ -34,6 +36,11 @@ namespace MSS.Platform.Workflow.WebApi
             services.AddDapper(Configuration);
             //PollingEngine.Configure(t => Task.Run(t));
             services.AddTransient<IWorkTaskService, WorkTaskService>();
+            services.AddEssentialService();
+            services.AddCSRedisCache(options =>
+            {
+                options.ConnectionString = this.Configuration["redis:ConnectionString"];
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

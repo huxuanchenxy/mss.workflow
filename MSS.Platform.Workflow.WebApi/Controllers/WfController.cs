@@ -4,7 +4,7 @@ using MSS.Platform.Workflow.WebApi.Model;
 using MSS.Platform.Workflow.WebApi.Service;
 using System.Threading.Tasks;
 
-namespace MSS.Platform.ProcessApp.Controllers
+namespace MSS.Platform.Workflow.WebApi.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
@@ -22,9 +22,8 @@ namespace MSS.Platform.ProcessApp.Controllers
             ApiResult ret = new ApiResult { code = Code.Failure };
             try
             {
-                var data = _service.GetReadyTasks(parm);
-                ret.code = Code.Success;
-                ret.data = data;
+                ret = await _service.GetReadyTasks(parm);
+                
             }
             catch (System.Exception ex)
             {

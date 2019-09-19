@@ -13,6 +13,7 @@ namespace MSS.Platform.Workflow.WebApi.Model
     {
         public int? ActivityState { get; set; }
         public int? AssignedToUserID { get; set; }
+        public string AppName { get; set; }
     }
 
     public class WorkTaskPageView
@@ -52,11 +53,11 @@ namespace MSS.Platform.Workflow.WebApi.Model
 
         public string PreviousUserName { get; set; }
 
-        public System.DateTime PreviousDateTime { get; set; }
+        public Nullable<DateTime> PreviousDateTime { get; set; }
 
         public short TaskType { get; set; }
 
-        public int EntrustedTaskID { get; set; }        //被委托任务ID
+        public Nullable<int> EntrustedTaskID { get; set; }        //被委托任务ID
 
         public string AssignedToUserID { get; set; }
 
@@ -64,9 +65,9 @@ namespace MSS.Platform.Workflow.WebApi.Model
 
         public System.DateTime CreatedDateTime { get; set; }
 
-        public DateTime LastUpdatedDateTime { get; set; }
+        public Nullable<DateTime> LastUpdatedDateTime { get; set; }
 
-        public DateTime EndedDateTime { get; set; }
+        public Nullable<System.DateTime> EndedDateTime { get; set; }
 
         public string EndedByUserID { get; set; }
 
@@ -80,15 +81,15 @@ namespace MSS.Platform.Workflow.WebApi.Model
 
         public short ProcessState { get; set; }
 
-        public short ComplexType { get; set; }
+        public Nullable<short> ComplexType { get; set; }
 
-        public int MIHostActivityInstanceID { get; set; }
+        public Nullable<int> MIHostActivityInstanceID { get; set; }
 
         public string PCreatedByUserID { get; set; }
 
         public string PCreatedByUserName { get; set; }
 
-        public DateTime PCreatdDateTime { get; set; }
+        public Nullable<DateTime> PCreatdDateTime { get; set; }
 
         public short MiHostState { get; set; }
 

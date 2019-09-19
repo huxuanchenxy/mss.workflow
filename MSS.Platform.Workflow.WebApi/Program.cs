@@ -24,7 +24,7 @@ namespace MSS.Platform.Workflow.WebApi
             return WebHost.CreateDefaultBuilder(args)
 
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                 .UseIISIntegration()
+                 //.UseIISIntegration()
 
                 .UseKestrel(options =>
                 {

@@ -11,7 +11,7 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "commandLineArgs": "8400",
+      "commandLineArgs": "8443",
       "launchBrowser": true,
       "launchUrl": "api/values",
       "environmentVariables": {
