@@ -99,7 +99,7 @@ namespace MSS.Platform.Workflow.WebApi.Model
 
         public short MiHostState { get; set; }
 
-
+        public string LastUpdatedByUserName { get; set; }
     }
 
 
