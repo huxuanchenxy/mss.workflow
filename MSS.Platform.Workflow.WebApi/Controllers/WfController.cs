@@ -23,12 +23,31 @@ namespace MSS.Platform.Workflow.WebApi.Controllers
             try
             {
                 ret = await _service.GetReadyTasks(parm);
-                
+
             }
             catch (System.Exception ex)
             {
                 ret.msg = string.Format(
                     "获取当前用户待办任务数据失败, 异常信息:{0}",
+                    ex.Message);
+            }
+            return ret;
+        }
+
+
+        [HttpGet("GetPageMyApply")]
+        public async Task<ActionResult<ApiResult>> GetPageMyApply([FromQuery] WorkTaskQueryParm parm)
+        {
+            ApiResult ret = new ApiResult { code = Code.Failure };
+            try
+            {
+                ret = await _service.GetPageMyApply(parm);
+
+            }
+            catch (System.Exception ex)
+            {
+                ret.msg = string.Format(
+                    "获取当前用户申请数据失败, 异常信息:{0}",
                     ex.Message);
             }
             return ret;
