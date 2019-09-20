@@ -14,6 +14,7 @@ namespace MSS.Platform.Workflow.WebApi.Data
     {
         Task<WorkTaskPageView> GetPageList(WorkTaskQueryParm param);
         Task<WorkTaskPageView> GetPageMyApply(WorkTaskQueryParm parm);
+        Task<WorkTaskPageView> GetPageActivityInstance(WorkQueryParm parm);
     }
 
     public class WorkTaskRepo : BaseRepo, IWorkTaskRepo<TaskViewModel>
@@ -143,6 +144,69 @@ namespace MSS.Platform.Workflow.WebApi.Data
 
                 sql.Append(whereSql);
 
+
+                var data = await c.QueryAsync<TaskViewModel>(sql.ToString());
+                var total = data.ToList().Count;
+                sql.Append(" order by " + parm.sort + " " + parm.order)
+                .Append(" limit " + (parm.page - 1) * parm.rows + "," + parm.rows);
+                var ets = await c.QueryAsync<TaskViewModel>(sql.ToString());
+
+                WorkTaskPageView ret = new WorkTaskPageView();
+                ret.rows = ets.ToList();
+                ret.total = total;
+                return ret;
+            });
+        }
+
+        public async Task<WorkTaskPageView> GetPageActivityInstance(WorkQueryParm parm)
+        {
+            return await WithConnection(async c =>
+            {
+
+                StringBuilder sql = new StringBuilder();
+                sql.Append($@"  SELECT pi.ID,
+		                                ai.AppName,
+		                                ai.ProcessGUID,
+		                                pi.Version,
+		                                ai.ActivityGUID,
+		                                ai.ActivityName,
+		                                ai.ActivityType,
+		                                ai.WorkItemType,
+		                                ai.ActivityState,
+		                                pi.ProcessState,
+		                                ai.ComplexType,
+		                                ai.MIHostActivityInstanceID,
+		                                pi.AppInstanceCode,
+		                                pi.ProcessName,
+		                                pi.CreatedByUserID,
+		                                pi.CreatedByUserName,
+		                                pi.CreatedDateTime
+                                FROM
+		                                WfActivityInstance ai
+                                INNER JOIN
+		                                WfProcessInstance pi ON ai.ProcessInstanceID = pi.ID ");
+                StringBuilder whereSql = new StringBuilder();
+                whereSql.Append(" WHERE ai.ProcessInstanceID = '" + parm.ProcessInstanceID + "'");
+
+                //if (parm.AppName != null)
+                //{
+                //    whereSql.Append(" and ai.AppName like '%" + parm.AppName.Trim() + "%'");
+                //}
+                //if (parm.ProcessInstanceID != null)
+                //{
+                //    whereSql.Append(" and ai.ProcessInstanceID = '" + parm.ProcessInstanceID + "'");
+                //}
+
+                sql.Append(whereSql);
+
+                //验证是否有参与到流程中
+                string sqlcheck = sql.ToString();
+                sqlcheck += ("AND ai.CreatedByUserID = '" + parm.UserID + "'");
+                var checkdata = await c.QueryFirstOrDefaultAsync<TaskViewModel>(sqlcheck);
+                if (checkdata == null)
+                {
+                    return null;
+                }
 
                 var data = await c.QueryAsync<TaskViewModel>(sql.ToString());
                 var total = data.ToList().Count;

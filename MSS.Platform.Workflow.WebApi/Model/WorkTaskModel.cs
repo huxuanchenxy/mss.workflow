@@ -16,6 +16,12 @@ namespace MSS.Platform.Workflow.WebApi.Model
         public string AppName { get; set; }
     }
 
+    public class WorkQueryParm : BaseQueryParm
+    {
+        public int UserID { get; set; }
+        public int? ProcessInstanceID { get; set; }
+    }
+
     public class WorkTaskPageView
     {
         public List<TaskViewModel> rows { get; set; }

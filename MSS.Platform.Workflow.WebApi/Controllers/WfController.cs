@@ -53,6 +53,24 @@ namespace MSS.Platform.Workflow.WebApi.Controllers
             return ret;
         }
 
+        [HttpGet("GetPageActivityInstance")]
+        public async Task<ActionResult<ApiResult>> GetPageActivityInstance([FromQuery] WorkQueryParm parm)
+        {
+            ApiResult ret = new ApiResult { code = Code.Failure };
+            try
+            {
+                ret = await _service.GetPageActivityInstance(parm);
+
+            }
+            catch (System.Exception ex)
+            {
+                ret.msg = string.Format(
+                    "获取当前用户参与的流转数据失败, 异常信息:{0}",
+                    ex.Message);
+            }
+            return ret;
+        }
+
 
 
     }

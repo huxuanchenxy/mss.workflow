@@ -56,9 +56,35 @@ namespace MSS.Platform.Workflow.WebApi.Service
 
             try
             {
-                //parm.AssignedToUserID = _authhelper.GetUserId();
-                parm.AssignedToUserID = 40;
+                parm.AssignedToUserID = _authhelper.GetUserId();
+                //parm.AssignedToUserID = 40;
                 var data = await _repo.GetPageMyApply(parm);
+                ret.code = Code.Success;
+                ret.data = data;
+            }
+            catch (Exception ex)
+            {
+                ret.code = Code.Failure;
+                ret.msg = ex.Message;
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// 流转日志
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
+        public async Task<ApiResult> GetPageActivityInstance(WorkQueryParm parm)
+        {
+            ApiResult ret = new ApiResult();
+
+            try
+            {
+                parm.UserID = _authhelper.GetUserId();
+                //parm.UserID = 40;
+                var data = await _repo.GetPageActivityInstance(parm);
                 ret.code = Code.Success;
                 ret.data = data;
             }
@@ -81,6 +107,7 @@ namespace MSS.Platform.Workflow.WebApi.Service
     {
         Task<ApiResult> GetReadyTasks(WorkTaskQueryParm parm);
         Task<ApiResult> GetPageMyApply(WorkTaskQueryParm parm);
+        Task<ApiResult> GetPageActivityInstance(WorkQueryParm parm);
     }
 
 
