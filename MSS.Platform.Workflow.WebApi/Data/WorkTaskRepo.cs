@@ -182,7 +182,8 @@ namespace MSS.Platform.Workflow.WebApi.Data
 		                                pi.CreatedByUserName,
 		                                pi.CreatedDateTime,
                                         ai.EndedByUserName,
-                                        ai.LastUpdatedByUserName
+                                        ai.LastUpdatedByUserName,
+                                        ai.LastUpdatedDateTime
                                 FROM
 		                                WfActivityInstance ai
                                 INNER JOIN
