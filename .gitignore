@@ -9,3 +9,7 @@ bin
 /Slickflow.Designer/Properties/PublishProfiles/*.user
 /Slickflow.WebApi/Properties/PublishProfiles/*.user
 /Slickflow.WebApi/Properties/PublishProfiles/*.pubxml
+/Slickflow.Engine
+/Slickflow.Data
+/Slickflow.Module.Resource
+/Slickflow.Module
