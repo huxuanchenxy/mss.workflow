@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Dapper.FluentMap;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MSS.Platform.Workflow.WebApi.Model;
 using System;
@@ -16,14 +17,13 @@ namespace MSS.Platform.Workflow.WebApi.Data
             optionsSection.Bind(options);
             services.AddSingleton<DapperOptions>(options);
 
-            services.AddTransient<IWorkTaskRepo<TaskViewModel>, WorkTaskRepo>();
+            services.AddTransient<IConstructionPlanRepo<ConstructionPlan>, ConstructionPlanRepo>();
 
-            // 配置列名映射
-            //FluentMapper.Initialize(config =>
-            //{
-            //    //config.AddMap(new BaseEntityMap());
-            //    config.AddMap(new ConsulServiceEntityMap());
-            //});
+            //配置列名映射
+            FluentMapper.Initialize(config =>
+            {
+                config.AddMap(new ConstructionPlanMap());
+            });
             return services;
         }
     }

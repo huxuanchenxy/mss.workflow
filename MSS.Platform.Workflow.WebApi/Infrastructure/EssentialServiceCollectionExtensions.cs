@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using MSS.API.Common.Utility;
+using MSS.Platform.Workflow.WebApi.Service;
 using System;
 
 namespace MSS.Platform.Workflow.WebApi.Infrastructure
@@ -14,6 +15,7 @@ namespace MSS.Platform.Workflow.WebApi.Infrastructure
 
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAuthHelper, AuthHelper>();
+            services.AddTransient<IConstructionPlanService, ConstructionPlanService>();
             return services;
         }
     }
