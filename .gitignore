@@ -13,3 +13,8 @@ bin
 /Slickflow.Data
 /Slickflow.Module.Resource
 /Slickflow.Module
+/NETBPMFlow.Data
+/NETBPMFlow.Designer
+/NETBPMFlow.Engine
+/NETBPMFlow.Module
+/NETBPMFlow.Module.Resource
