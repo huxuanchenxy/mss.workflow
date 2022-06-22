@@ -23,7 +23,7 @@
   <ItemGroup>
     <PackageReference Include="Devart.Data.Oracle.EFCore" Version="9.5.399" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.1" />
     <PackageReference Include="ServiceStack" Version="5.0.2" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.1" />
